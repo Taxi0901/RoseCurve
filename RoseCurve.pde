@@ -1,29 +1,29 @@
 
 int numWaves;  //number of waves per a circle
-int numSamplePts; //一つの波を何個の点で表すか
+int numSamplePts; //points per a wave
 
-PVector[] pts; //前のフレームで計算した点を格納するための配列
-PVector[] newPts; //今のフレームで計算した点を格納するための配列
+PVector[] pts; //array for points
+PVector[] newPts; //array for new points
 
-PVector centrePt; //円の中心
-float radius; //円の半径
+PVector centrePt; //center of circle
+float radius; 
 
-float amp; //波の振幅
-float ampBase;//波の振幅の基準
+float amp; 
+float ampBase;
 
-float theta; //波の角度
+float theta; //angle of a wave
 
-float period; //周期(ミリ秒)
+float period; //millisecond
 
-float offset; //振幅を変化させる三角関数のオフセット値
+float offset; //for change of amplitude
 
-int idShiftForConnect; //どれだけ違うインデックスの点を結び合わせるか
+int idShiftForConnect; //difference of index
 
-float deltaTheta; //　2pi/要素数
-PVector xAxis; //x軸 
-PVector xVec; //単位ベクトル 
+float deltaTheta; //2pi/要素数
+PVector xAxis;
+PVector xVec; //unit vector
 
-boolean firstDraw; //最初のDrawの場合のフラグを立てる
+boolean firstDrawFlg;
 
 
 void setup(){
@@ -35,11 +35,6 @@ void setup(){
   pts = new PVector[numWaves * numSamplePts];
   newPts = new PVector[numWaves * numSamplePts];
   
-  //debug
-  //null pointer error  メモリの場所がわからない
-  //println(pts);
-  //noLoop();
-  
   centrePt = new PVector(0.5*width, 0.5*height);
   radius = 100;
   
@@ -48,7 +43,7 @@ void setup(){
   
   theta = 0;
   
-  period = 8000; //(ミリ秒)
+  period = 8000; //(millisecond)
   
   offset = 3;
   
@@ -57,38 +52,31 @@ void setup(){
   deltaTheta = TWO_PI / (numWaves * numSamplePts);
   
   xAxis = new PVector(1, 0);
-  xVec = xAxis.copy();  //xVecにxAxisをコピーする　//xVec =xAxis;ではダメ  
+  xVec = xAxis.copy(); 
 
-  firstDraw = true;
-
-  //noLoop();
+  firstDrawFlg = true;
 
 }
 
 
 void draw(){
-  background(30);   
+  background(30);
   
-  //millis() ミリ秒
-  amp = ampBase * (sin(TWO_PI/period * millis()) + offset);
+  amp = ampBase * (sin(TWO_PI/period * millis()) + offset); //millis() millisecond
   
-  //xVecを初期値に戻す
-  xVec = xAxis.copy(); 
+  xVec = xAxis.copy();  //initialize xAxis
   
   for(int i = 0; i < newPts.length; i++){
     
-    //半径ベクトルの大きさ
-    float r = radius + amp * sin(numWaves * theta );
+    float r = radius + amp * sin(numWaves * theta ); //the size of radius vector
     
-    //半径ベクトルの定義
-    PVector rVec = PVector.mult(xVec, r); //mult  xVecのr倍
+    PVector rVec = PVector.mult(xVec, r); //definition of radius vector
       
-    newPts[i] = PVector.add(centrePt, rVec); //add centrePtにrVecをたす
+    newPts[i] = PVector.add(centrePt, rVec);
       
-    if(!firstDraw) {     //if(firstDraw==false)
+    if(!firstDrawFlg) {
       
-      //配列のインデックスを循環させる
-      int idPrePt = (i + idShiftForConnect)% pts.length;
+      int idPrePt = (i + idShiftForConnect)% pts.length; //iterate index of the array
       PVector prePt = pts[idPrePt].copy();
       
       stroke(200, 200);
@@ -101,27 +89,19 @@ void draw(){
     strokeWeight(1);
     ellipse(newPts[i].x, newPts[i].y, 2, 2);
     
-    theta += deltaTheta;
-    //角度のアップデート
+    theta += deltaTheta; //update of angle
     
     xVec.rotate(deltaTheta);
     
   }
   
-  //半径ベクトルの角度をリセット
-  theta = 0;
+  theta = 0; //reset of radius vector
   
-  //newPtを次のアップデートのために保存する
-  for(int i = 0; i < newPts.length; i++){
+  for(int i = 0; i < newPts.length; i++){     //save newPt for next update
     pts[i] = newPts[i].copy();
   }
   
-  //フラグをリセットする
-  //
-  //if(firstDraw){
-  //  firstDraw = false;
-  //}
-  if(firstDraw) firstDraw = false;  //１行で書けば、{}の省略可能
+  if(firstDrawFlg) firstDrawFlg = false;  //reset flag
   
 }
 
