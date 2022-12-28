@@ -19,7 +19,7 @@ float offset; //for change of amplitude
 
 int idShiftForConnect; //difference of index
 
-float deltaTheta; //2pi/要素数
+float deltaTheta; //2pi/all points
 PVector xAxis;
 PVector xVec; //unit vector
 
