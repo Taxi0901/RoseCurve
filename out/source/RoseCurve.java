@@ -154,7 +154,7 @@ public void draw(){
 
 public void keyPressed(){
   if(key == 'p'|| key == 'P'){ //printout
-    save("img/test1.png");
+    save("img/20221228_roseCurve.png");
   }
 }
   public void settings() {  size(800, 800); }

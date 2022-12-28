@@ -138,6 +138,6 @@ void draw(){
 
 void keyPressed(){
   if(key == 'p'|| key == 'P'){ //printout
-    save("img/test1.png");
+    save("img/20221228_roseCurve.png");
   }
 }
