@@ -15,12 +15,7 @@ import java.io.IOException;
 public class RoseCurve extends PApplet {
 
 
-//配列、三角関数、Roseカーブ
-
-//Roseカーブ　　https://en.wikipedia.org/wiki/Rose_(mathematics)
-
-
-int numWaves;  //円一周における波の数
+int numWaves;  //number of waves per a circle
 int numSamplePts; //一つの波を何個の点で表すか
 
 PVector[] pts; //前のフレームで計算した点を格納するための配列
@@ -50,8 +45,8 @@ boolean firstDraw; //最初のDrawの場合のフラグを立てる
 public void setup(){
    
   
-  numWaves = 8;
-  numSamplePts = 50;
+  numWaves = 4;
+  numSamplePts = 200;
   
   pts = new PVector[numWaves * numSamplePts];
   newPts = new PVector[numWaves * numSamplePts];
@@ -87,7 +82,6 @@ public void setup(){
 }
 
 
-
 public void draw(){
   background(30);   
   
@@ -117,11 +111,7 @@ public void draw(){
       strokeWeight(0.2f);
       line(prePt.x, prePt.y, newPts[i].x, newPts[i].y);
       
-      
-      
-      
     }
-    
     
     stroke(255, 200);
     strokeWeight(1);
@@ -131,7 +121,6 @@ public void draw(){
     //角度のアップデート
     
     xVec.rotate(deltaTheta);
-    
     
   }
   
@@ -154,7 +143,7 @@ public void draw(){
 
 public void keyPressed(){
   if(key == 'p'|| key == 'P'){ //printout
-    save("img/20221228_roseCurve.png");
+    save("img/20221228_roseCurve_1.png");
   }
 }
   public void settings() {  size(800, 800); }

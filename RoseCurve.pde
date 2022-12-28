@@ -1,10 +1,5 @@
 
-//配列、三角関数、Roseカーブ
-
-//Roseカーブ　　https://en.wikipedia.org/wiki/Rose_(mathematics)
-
-
-int numWaves;  //円一周における波の数
+int numWaves;  //number of waves per a circle
 int numSamplePts; //一つの波を何個の点で表すか
 
 PVector[] pts; //前のフレームで計算した点を格納するための配列
@@ -34,8 +29,8 @@ boolean firstDraw; //最初のDrawの場合のフラグを立てる
 void setup(){
   size(800, 800); 
   
-  numWaves = 8;
-  numSamplePts = 50;
+  numWaves = 4;
+  numSamplePts = 200;
   
   pts = new PVector[numWaves * numSamplePts];
   newPts = new PVector[numWaves * numSamplePts];
@@ -71,7 +66,6 @@ void setup(){
 }
 
 
-
 void draw(){
   background(30);   
   
@@ -101,11 +95,7 @@ void draw(){
       strokeWeight(0.2);
       line(prePt.x, prePt.y, newPts[i].x, newPts[i].y);
       
-      
-      
-      
     }
-    
     
     stroke(255, 200);
     strokeWeight(1);
@@ -115,7 +105,6 @@ void draw(){
     //角度のアップデート
     
     xVec.rotate(deltaTheta);
-    
     
   }
   
@@ -138,6 +127,6 @@ void draw(){
 
 void keyPressed(){
   if(key == 'p'|| key == 'P'){ //printout
-    save("img/20221228_roseCurve.png");
+    save("img/20221228_roseCurve_1.png");
   }
 }
